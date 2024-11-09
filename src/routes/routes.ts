@@ -25,7 +25,7 @@ router.get('/ping', (req, res) => {
   return res.status(200).json({ msg: 'pong' })
 })
 
-router.post('/login', login.insert)
+router.post('/login', login.login)
 
 
 router.post('/logout', logout.insert)
