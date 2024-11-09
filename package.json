@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "start": "ts-node-dev --respawn --transpile-only ./src/server",
-    "dev": "ts-node-dev src/index"
+    "seed": "npx ts-node src/config/seeds/user.ts"
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
@@ -17,7 +17,7 @@
     "@types/typescript": "^2.0.0",
     "@types/yup": "^0.32.0",
     "axios": "^1.4.0",
-    "bcrypt": "^5.1.0",
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cloudinary": "^1.37.0",
     "cookie-parser": "^1.4.6",
