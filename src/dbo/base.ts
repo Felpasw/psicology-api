@@ -11,7 +11,7 @@ async function insert(Model, data) {
 
 async function get<T extends Document>(Model: Model<T>, object: any): Promise<T[]> {
   try {
-    return await Model.find(object)
+    return await Model.find({...object, deletedAt: null})
   } catch (error) {
     throw new Error(`Erro ao encontrar documentos: ${error}`)
   }
@@ -19,7 +19,7 @@ async function get<T extends Document>(Model: Model<T>, object: any): Promise<T[
 
 async function update<T extends ModelDocument>(Model: Model<T>, id: string, data: Partial<T>): Promise<T | null> {
   try {
-    return await Model.findByIdAndUpdate(id, data, { new: true })
+    return await Model.findByIdAndUpdate(id, data)
   } catch (error) {
     throw new Error(`Erro ao atualizar documento: ${error}`)
   }
@@ -27,7 +27,7 @@ async function update<T extends ModelDocument>(Model: Model<T>, id: string, data
 
 async function remove<T extends ModelDocument>(Model: Model<T>, id: string): Promise<T> {
   try {
-    return await Model.findByIdAndDelete(id)
+    return await Model.findByIdAndUpdate(id, {deletedAt: new Date()})
   } catch (error) {
     throw new Error(`Erro ao excluir documento: ${error}`)
   }
