@@ -11,6 +11,7 @@ interface IPatient extends Document {
   medicalHistory?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  deletedAt?: Date;
 }
 
 const patientSchema = new mongoose.Schema<IPatient>(
@@ -52,6 +53,11 @@ const patientSchema = new mongoose.Schema<IPatient>(
     medicalHistory: {
       type: String,
     },
+    deletedAt: {  
+        type: Date,
+        default: null,  
+      },
+ 
   },
   {
     timestamps: true, 

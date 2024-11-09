@@ -12,6 +12,7 @@ interface ISchedule extends Document {
   createdBy: mongoose.Schema.Types.ObjectId;  
   createdAt?: Date;
   updatedAt?: Date;
+  deletedAt?: Date;
 }
 
 const scheduleSchema = new mongoose.Schema<ISchedule>(
@@ -50,6 +51,11 @@ const scheduleSchema = new mongoose.Schema<ISchedule>(
       ref: 'User',
       required: true,
     },
+    deletedAt: {  
+        type: Date,
+        default: null,  
+      },
+
   },
   {
     timestamps: true, 
