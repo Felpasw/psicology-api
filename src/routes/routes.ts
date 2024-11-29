@@ -3,30 +3,26 @@ import cors from 'cors'
 import api from '../api/template'
 import auth from '../midlewares/auth'
 import handleFacedeExistence from '../midlewares/handleFacadeExistence'
-const path = require('path')
 import login from '../api/login'
 import logout from '../api/logout'
 require('dotenv').config()
 
-
-
 const router = express.Router()
 
-router.use((_req, res, next) => {
-  res.header('Access-Control-Allow-Origin', "*")
-  //res.header('Access-Control-Allow-Credentials', true)
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-  res.header('Access-Control-Allow-Headers', '*')
-  router.use(cors())
-  next()
-})
+const corsOptions = {
+  origin: process.env.CORS || '*',
+  credentials: true,
+  methods: ['GET', 'PUT', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}
+
+router.use(cors(corsOptions))
 
 router.get('/ping', (req, res) => {
   return res.status(200).json({ msg: 'pong' })
 })
 
 router.post('/login', login.login)
-
 
 router.post('/logout', logout.insert)
 
