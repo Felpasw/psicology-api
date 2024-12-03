@@ -5,11 +5,11 @@ interface ISchedule extends Document {
   title: string;
   description?: string;
   date: Date;
-  startTime: string;  
-  endTime?: string;   
+  startTime: string;
+  endTime?: string;
   location?: string;
   status: 'confirmed' | 'pending' | 'cancelled';
-  createdBy: mongoose.Schema.Types.ObjectId;  
+  createdBy: mongoose.Schema.Types.ObjectId;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -36,6 +36,7 @@ const scheduleSchema = new mongoose.Schema<ISchedule>(
     },
     endTime: {
       type: String,
+      required: true,
     },
     location: {
       type: String,
@@ -51,16 +52,18 @@ const scheduleSchema = new mongoose.Schema<ISchedule>(
       ref: 'User',
       required: true,
     },
-    deletedAt: {  
-        type: Date,
-        default: null,  
-      },
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
 
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 
 const ScheduleModel: Model<ISchedule> = mongoose.model<ISchedule>('Schedule', scheduleSchema);
 export default ScheduleModel;
+
+

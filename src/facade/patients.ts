@@ -13,7 +13,6 @@ const insert = async object => {
 }
 
 const update = async (object, id) => {
-    console.log(id)
     return await  dbo.update(PatientModel,  id, object)
 }
 
