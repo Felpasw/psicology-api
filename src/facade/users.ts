@@ -8,9 +8,9 @@ const get = async (object) => {
 }
 
 const insert = async (object) => {
-  const {password} = object  
+  const { password } = object
 
-  object.password = bcrypt.hash(password, 10)
+  object.password = await bcrypt.hash(password, 10)
   return await dbo.insert(user, object)
 }
 
