@@ -1,5 +1,5 @@
 import { Response, Request } from 'express'
-import bcrypt from 'bcrypt' // ou 'bcrypt' se estiver usando esse
+import bcrypt from 'bcrypt'
 import moment from 'moment'
 import UserModel from '../config/tableModels/user'
 import dbo from '../dbo/base'
