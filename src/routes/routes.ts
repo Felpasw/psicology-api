@@ -5,7 +5,6 @@ import auth from '../midlewares/auth'
 import handleFacedeExistence from '../midlewares/handleFacadeExistence'
 import login from '../api/login'
 import logout from '../api/logout'
-import changePassword from './changePassword'
 require('dotenv').config()
 
 const router = express.Router()
@@ -23,7 +22,6 @@ router.get('/ping', (req, res) => {
   return res.status(200).json({ msg: 'pong' })
 })
 
-router.post('/change-password', changePassword.insert)
 
 router.post('/login', login.login)
 

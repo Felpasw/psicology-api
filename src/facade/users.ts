@@ -23,6 +23,9 @@ const insert = async (object) => {
     }
   }
 
+  const { password } = object
+  object.password = await bcrypt.hash(password, 10)
+
   return await dbo.insert(user, object)
 }
 

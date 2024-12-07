@@ -24,10 +24,7 @@ const userSchema = Yup.object().shape({
   gender: Yup.string().required('O gênero do paciente é obrigatório').typeError('Gênero deve ser uma string'),
   email: Yup.string().required('O email é obrigatório').typeError('O email ser um caracter'),
   address: Yup.string().typeError('Endereço deve ser um caracter'),
-  password: Yup.string().required('A senha é obrigatória ').typeError('Senha deve ser um caracter'),
-  confirmPassword: Yup.string()
-    .required('A senha é obrigatória')
-    .typeError('Confirmação da senha deve ser um caracter'),
+
 })
 
 export { userSchema }
