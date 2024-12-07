@@ -14,7 +14,7 @@ interface IPatient extends Document {
   deletedAt?: Date
 }
 
-const userSchema = Yup.object().shape({
+const patientSchema = Yup.object().shape({
   name: Yup.string().required('O nome do paciente é obrigatório').typeError('O nome de usuário deve ser um número'),
   CPF: Yup.string().required('O CPF do paciente é obrigatório').typeError('O nome de usuário deve ser um número'),
   age: Yup.number()
@@ -27,4 +27,4 @@ const userSchema = Yup.object().shape({
 
 })
 
-export { userSchema }
+export { patientSchema }
