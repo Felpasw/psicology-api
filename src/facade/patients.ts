@@ -11,7 +11,7 @@ const get = async object => {
 
 const insert = async object => {
     try {
-        await Patient.validate(object, { abortEarly: false })
+        await patientSchema.validate(object, { abortEarly: false })
     } catch (error) {
         if (error instanceof Yup.ValidationError) {
             const errors = error.inner.reduce((acc, err) => {
@@ -24,14 +24,33 @@ const insert = async object => {
     }
 
     return await dbo.insert(PatientModel, object)
-
 }
 
 const update = async (object, id) => {
+
+    if (!id) {
+        return
+    }
+    try {
+        await patientSchema.validate(object, { abortEarly: false })
+    } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+            const errors = error.inner.reduce((acc, err) => {
+                acc[err.path] = err.message
+                return acc
+            }, {})
+
+            return { errors }
+        }
+    }
+
     return await dbo.update(PatientModel, id, object)
 }
 
 const remove = async id => {
+    if (!id) {
+        return
+    }
     return await dbo.remove(PatientModel, id)
 
 }
