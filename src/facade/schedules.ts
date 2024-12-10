@@ -5,6 +5,12 @@ import { scheduleSchema } from '../models/schedule'
 import UserModel from '../config/tableModels/user'
 
 const get = async (object) => {
+  const { date } = object
+
+  if (date && (date.day || date.month)) {
+    return await dbo.filterByMonthOrDay(schedule, 'date', date)
+  }
+
   return await dbo.get(schedule, object)
 }
 
@@ -17,14 +23,12 @@ const insert = async (object) => {
         acc[err.path] = err.message
         return acc
       }, {})
-      console.log({ errors })
 
       return { errors }
     }
+
     const { createdBy } = object
     const response = await dbo.get(UserModel, { _id: createdBy })
-    console.log(object)
-    console.log(createdBy)
 
     if (!response) {
       return { errors: { createdBy: 'Usuário de criação inválido.' } }
