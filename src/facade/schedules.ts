@@ -56,6 +56,10 @@ const update = async (object, id: string) => {
 }
 
 const remove = async (id) => {
+  if (!id) {
+    return
+  }
+
   return await dbo.remove(schedule, id)
 }
 
