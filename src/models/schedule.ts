@@ -26,12 +26,11 @@ const scheduleSchema = Yup.object().shape({
       return intervalInHours <= 4
     }),
   location: Yup.string().nullable().typeError('O local deve ser uma string'),
-  status: Yup.mixed<'confirmed' | 'pending' | 'cancelled'>()
-    .required('O status é obrigatório')
-    .oneOf(['confirmed', 'pending', 'cancelled'], 'Status deve ser "confirmed", "pending" ou "cancelled"'),
-  createdBy: Yup.string()
-    .required('O ID do criador é obrigatório')
-    .typeError('O ID do criador deve ser uma string válida'),
+  status: Yup.mixed<'confirmed' | 'pending' | 'cancelled' | 'completed'>().oneOf(
+    ['confirmed', 'pending', 'cancelled', 'completed'],
+    'Status deve ser "confirmed", "pending","cancelled" ou "completed"'
+  ),
+  patient: Yup.string().required('O paciente é obrigatório').typeError('O ID do criador deve ser uma string válida'),
 })
 
 export { scheduleSchema }

@@ -1,18 +1,18 @@
-import mongoose, { Document, Model } from 'mongoose';
+import mongoose, { Document, Model } from 'mongoose'
 
 // Interface para o documento da agenda
 interface ISchedule extends Document {
-  title: string;
-  description?: string;
-  date: Date;
-  startTime: string;
-  endTime?: string;
-  location?: string;
-  status: 'confirmed' | 'pending' | 'cancelled';
-  createdBy: mongoose.Schema.Types.ObjectId;
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
+  title: string
+  description?: string
+  date: Date
+  startTime: string
+  endTime?: string
+  location?: string
+  status: 'confirmed' | 'pending' | 'cancelled'
+  patient: mongoose.Schema.Types.ObjectId
+  createdAt?: Date
+  updatedAt?: Date
+  deletedAt?: Date
 }
 
 const scheduleSchema = new mongoose.Schema<ISchedule>(
@@ -44,26 +44,23 @@ const scheduleSchema = new mongoose.Schema<ISchedule>(
     },
     status: {
       type: String,
-      enum: ['confirmed', 'pending', 'cancelled'],
+      enum: ['confirmed', 'pending', 'cancelled', 'completed'],
       default: 'pending',
     },
-    createdBy: {
+    patient: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'Patient',
       required: true,
     },
     deletedAt: {
       type: Date,
       default: null,
     },
-
   },
   {
     timestamps: true,
   }
-);
+)
 
-const ScheduleModel: Model<ISchedule> = mongoose.model<ISchedule>('Schedule', scheduleSchema);
-export default ScheduleModel;
-
-
+const ScheduleModel: Model<ISchedule> = mongoose.model<ISchedule>('Schedule', scheduleSchema)
+export default ScheduleModel

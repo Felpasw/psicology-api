@@ -2,7 +2,7 @@ import dbo from '../dbo/base'
 import schedule from '../config/tableModels/schedule'
 import * as Yup from 'yup'
 import { scheduleSchema } from '../models/schedule'
-import UserModel from '../config/tableModels/user'
+import PatientModel from '../config/tableModels/patients'
 
 const get = async (object) => {
   const { date } = object
@@ -27,11 +27,12 @@ const insert = async (object) => {
       return { errors }
     }
 
-    const { createdBy } = object
-    const response = await dbo.get(UserModel, { _id: createdBy })
+    const { patient } = object
+
+    const response = await dbo.get(PatientModel, { _id: patient })
 
     if (!response) {
-      return { errors: { createdBy: 'Usuário de criação inválido.' } }
+      return { errors: { patient: 'Usuário de criação inválido.' } }
     }
   }
 
