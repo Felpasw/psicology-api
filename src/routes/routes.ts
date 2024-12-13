@@ -5,6 +5,7 @@ import auth from '../midlewares/auth'
 import handleFacedeExistence from '../midlewares/handleFacadeExistence'
 import login from '../api/login'
 import logout from '../api/logout'
+import report from '../api/report'
 require('dotenv').config()
 
 const router = express.Router()
@@ -22,6 +23,9 @@ router.get('/ping', (req, res) => {
   return res.status(200).json({ msg: 'pong' })
 })
 
+router.get('/report/:method', report.getReport)
+
+router.post('/login', login.login)
 
 router.post('/login', login.login)
 
