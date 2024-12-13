@@ -26,14 +26,14 @@ const insert = async (object) => {
 
       return { errors }
     }
+  }
 
-    const { patient } = object
+  const { patient } = object
 
-    const response = await dbo.get(PatientModel, { _id: patient })
+  const response = await dbo.get(PatientModel, { _id: patient })
 
-    if (!response) {
-      return { errors: { patient: 'Usuário de criação inválido.' } }
-    }
+  if (!response) {
+    return { errors: { patient: 'Paciente inválido.' } }
   }
 
   return await dbo.insert(schedule, object)
@@ -50,6 +50,14 @@ const update = async (object, id: string) => {
 
       return { errors }
     }
+  }
+
+  const { patient } = object
+
+  const response = await dbo.get(PatientModel, { _id: patient })
+
+  if (!response) {
+    return { errors: { patient: 'Paciente inválido.' } }
   }
 
   return await dbo.update(schedule, id, object)
