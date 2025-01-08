@@ -3,6 +3,22 @@ import schedule from '../config/tableModels/schedule'
 import * as Yup from 'yup'
 import { scheduleSchema } from '../models/schedule'
 import PatientModel from '../config/tableModels/patients'
+import mongoose from 'mongoose'
+
+interface schedule {
+  title: string
+  description?: string
+  date: Date
+  startTime: string
+  endTime: string
+  location?: string
+  status: 'confirmed' | 'pending' | 'cancelled'
+  patient: mongoose.Schema.Types.ObjectId
+  createdAt?: Date
+  updatedAt?: Date
+  deletedAt?: Date
+}
+
 
 const get = async (object) => {
   const { date } = object
@@ -28,12 +44,37 @@ const insert = async (object) => {
     }
   }
 
-  const { patient } = object
+  const { patient, date, startTime, endTime } = object
 
   const response = await dbo.get(PatientModel, { _id: patient })
 
   if (!response) {
     return { errors: { patient: 'Paciente inválido.' } }
+  }
+
+  const responseSchedule = await dbo.get(schedule, { date });
+
+  if (responseSchedule) {
+    const hasConflict = responseSchedule.some((item: schedule) => {
+      const itemStart = new Date(`1970-01-01T${item.startTime}:00`);
+      const itemEnd = new Date(`1970-01-01T${item.endTime}:00`);
+      const newStart = new Date(`1970-01-01T${startTime}:00`);
+      const newEnd = new Date(`1970-01-01T${endTime}:00`);
+
+      return (
+        (newStart < itemEnd && newStart >= itemStart) ||
+        (newEnd > itemStart && newEnd <= itemEnd) ||
+        (newStart <= itemStart && newEnd >= itemEnd)
+      );
+    });
+
+    if (hasConflict) {
+      return {
+        errors: {
+          date: 'Horário de consulta inválido! Outra consulta já foi marcada no intervalo informado!',
+        },
+      };
+    }
   }
 
   return await dbo.insert(schedule, object)

@@ -8,7 +8,7 @@ const scheduleSchema = Yup.object().shape({
     .required('O horário de início é obrigatório')
     .typeError('O horário de início deve ser uma string'),
   endTime: Yup.string()
-    .nullable()
+    .required()
     .typeError('O horário de término deve ser uma string')
     .test('is-after-startTime', 'O horário de término deve ser posterior ao horário de início', function (endTime) {
       const { startTime } = this.parent

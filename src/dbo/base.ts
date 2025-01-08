@@ -18,7 +18,7 @@ async function get<T extends Document>(Model: Model<T>, object: any): Promise<T[
   try {
     return await Model.find({ ...object, deletedAt: null })
   } catch (error) {
-    throw new Error(`Erro ao encontrar documentos: ${error}`)
+    return null
   }
 }
 
@@ -26,7 +26,8 @@ async function update<T extends ModelDocument>(Model: Model<T>, id: string, data
   try {
     return await Model.findByIdAndUpdate(id, data)
   } catch (error) {
-    throw new Error(`Erro ao atualizar documento: ${error}`)
+    return null
+
   }
 }
 
@@ -34,7 +35,8 @@ async function remove<T extends ModelDocument>(Model: Model<T>, id: string): Pro
   try {
     return await Model.findByIdAndUpdate(id, { deletedAt: new Date() })
   } catch (error) {
-    throw new Error(`Erro ao excluir documento: ${error}`)
+    return null
+
   }
 }
 
@@ -59,12 +61,14 @@ async function filterByMonthOrDay<T extends Document>(
       })
     }
   } else {
-    throw new Error('É necessário fornecer ao menos um parâmetro: year, month ou day.')
+    return null
+
   }
   try {
     return await Model.find(query)
   } catch (error) {
-    throw new Error(`Erro ao filtrar documentos: ${error}`)
+    return null
+
   }
 }
 
