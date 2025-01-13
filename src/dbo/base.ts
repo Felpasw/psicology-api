@@ -50,6 +50,8 @@ async function filterByMonthOrDay<T extends Document>(
   if (params.month || params.day) {
     query.$expr = { $and: [] }
 
+    query.deletedAt = null;
+
     if (params.month) {
       query.$expr.$and.push({
         $eq: [{ $month: `$${field}` }, params.month],
