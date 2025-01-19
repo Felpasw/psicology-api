@@ -6,6 +6,9 @@ import handleFacedeExistence from '../midlewares/handleFacadeExistence'
 import login from '../api/login'
 import logout from '../api/logout'
 import report from '../api/report'
+import multerConfig from '../config/multer'
+import multer from 'multer'
+
 require('dotenv').config()
 
 const router = express.Router()
@@ -16,6 +19,9 @@ const corsOptions = {
   methods: ['GET', 'PUT', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }
+
+router.use('/static', express.static('uploads'))
+
 
 router.use(cors(corsOptions))
 
@@ -33,7 +39,7 @@ router.post('/logout', logout.insert)
 
 router.get(`/:route`, auth.validate, handleFacedeExistence, api.get)
 
-router.post(`/:route`, auth.validate, handleFacedeExistence, api.insert)
+router.post(`/:route`, auth.validate, multer(multerConfig).any(), handleFacedeExistence, api.insert)
 
 router.put(`/:route/:id`, auth.validate, handleFacedeExistence, api.update)
 

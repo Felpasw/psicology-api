@@ -8,6 +8,11 @@ const get = async (object) => {
 }
 
 const insert = async (object) => {
+
+  if (object.files) {
+    object.profileImage = object.files[0].filename
+  }
+
   try {
     await patientSchema.validate(object, { abortEarly: false })
   } catch (error) {
