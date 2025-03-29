@@ -10,6 +10,7 @@ async function insert(Model, data) {
     const newDocument = new Model(data)
     return await newDocument.save()
   } catch (error) {
+
     return new Error(`ERROR! ${error}`)
   }
 }
@@ -24,8 +25,10 @@ async function get<T extends Document>(Model: Model<T>, object: any): Promise<T[
 
 async function update<T extends ModelDocument>(Model: Model<T>, id: string, data: Partial<T>): Promise<T | null> {
   try {
+
     return await Model.findByIdAndUpdate(id, data)
   } catch (error) {
+    console.log(error)
     return null
 
   }

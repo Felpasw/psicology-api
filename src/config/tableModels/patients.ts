@@ -4,11 +4,12 @@ interface IPatient extends Document {
   name: string;
   CPF: string;
   age: number;
-  gender: 'M' | 'F' | 'O';  
+  gender: 'M' | 'F' | 'O';
   phoneNumber?: string;
   email?: string;
   address?: string;
   medicalHistory?: string;
+  profileImage?: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -53,14 +54,19 @@ const patientSchema = new mongoose.Schema<IPatient>(
     medicalHistory: {
       type: String,
     },
-    deletedAt: {  
-        type: Date,
-        default: null,  
-      },
- 
+    profileImage: {
+      type: String,
+    },
+
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
+
+
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 
